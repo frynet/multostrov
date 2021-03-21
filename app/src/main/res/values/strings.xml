@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Multostrov</string>
+    <string name="cancel">Отмена</string>
+    <string name="invalid_data_dialog">Неправильный логин или пароль. Попробуйте снова.</string>
+    <string name="apply">OK</string>
+    <string name="get_started">Начать</string>
+    <string name="logout">Выйти</string>
+    <string name="logout_message">Хотите выйти?\n*Навсегда: выйти из аккаунта на этом устройстве</string>
+    <string name="temporary_logout">Временно</string>
+    <string name="permanent_logout">Навсегда</string>
+</resources>
