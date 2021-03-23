@@ -4,11 +4,6 @@ import org.jsoup.*
 
 object WebManager {
 
-    enum class AuthStatus {
-        YES,
-        NO
-    }
-
     private val cookies = mutableMapOf<String, String>()
 
     private fun setCookie(cookie: String) {
@@ -36,15 +31,6 @@ object WebManager {
         }
 
         throw Exception("Can't validate cookie in function checkCookie: unknown response from ${Config.AUTH_REQUEST}")
-    }
-
-    fun checkCookie(login: String, password: String): AuthStatus {
-        return if (
-            checkCookie(
-                getCookie(login, password)
-            )
-        ) AuthStatus.YES
-        else AuthStatus.NO
     }
 
     fun getCookie(login: String, password: String): String {

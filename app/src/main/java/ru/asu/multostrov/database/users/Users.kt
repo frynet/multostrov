@@ -18,20 +18,17 @@ object Users {
     }
 
     private var count: Long = 0
-    private var lastUserID: Long = 0
+    private var lastUserID: Long = -1
     private lateinit var database: SQLiteDatabase
     private lateinit var dbHelper: UsersDBHelper
-
-    lateinit var state: UserState
-
+    
     fun connect(context: Context) {
         dbHelper = UsersDBHelper(context)
         database = dbHelper.writableDatabase
         count = getCount()
         lastUserID = getLastUserID()
-        state = determineState()
 
-        if (state == UserState.CAN_LOGIN) {
+        if (state() == UserState.CAN_LOGIN) {
             updateCookie()
         }
     }
@@ -62,34 +59,40 @@ object Users {
         return list
     }
 
-    fun add(login: String, password: String) {
+    fun add(login: String, password: String, cookie: String) {
+        count++
+
         val newID = database.insertWithOnConflict(
             UserEntry.TABLE_NAME,
             null,
             ContentValues().apply {
                 put(UserEntry.COLUMN_LOGIN, login)
                 put(UserEntry.COLUMN_PASSWORD, password)
+                put(UserEntry.COLUMN_SESSION_COOKIE, cookie)
             },
-            SQLiteDatabase.CONFLICT_REPLACE
+            SQLiteDatabase.CONFLICT_NONE
         )
 
-        database.execSQL(LastUserEntry.CLEAR)
+        updateLastSessionID(newID)
+    }
 
-        database.insertWithOnConflict(
-            LastUserEntry.TABLE_NAME,
-            null,
+    fun update(login: String, password: String, cookie: String) {
+        database.update(
+            UserEntry.TABLE_NAME,
             ContentValues().apply {
-                put(LastUserEntry.ID, newID)
+                put(UserEntry.COLUMN_PASSWORD, password)
+                put(UserEntry.COLUMN_SESSION_COOKIE, cookie)
             },
-            SQLiteDatabase.CONFLICT_REPLACE
+            "${UserEntry.COLUMN_LOGIN} = ?",
+            arrayOf(login)
         )
 
-        count++
-        lastUserID = newID
-        updateCookie()
+        updateLastSessionID(getIdByLogin(login))
     }
 
     fun logoutTemporary() {
+        if (state() == UserState.NOT_LOGGED_IN) return
+
         val query = """
             UPDATE ${UserEntry.TABLE_NAME}
             SET ${UserEntry.COLUMN_PASSWORD} = NULL, ${UserEntry.COLUMN_SESSION_COOKIE} = NULL
@@ -100,16 +103,19 @@ object Users {
     }
 
     fun logoutPermanently() {
+        if (state() == UserState.NOT_LOGGED_IN) return
+
         count -= database.delete(
             UserEntry.TABLE_NAME,
             "${UserEntry.ID} = ?",
             arrayOf(lastUserID.toString())
         )
 
+        lastUserID = -1
         database.execSQL(LastUserEntry.CLEAR)
     }
 
-    private fun determineState(): UserState {
+    fun state(): UserState {
         if (count == 0L) return UserState.NEW_USER
 
         if (lastUserID < 0) return UserState.NOT_LOGGED_IN
@@ -117,6 +123,29 @@ object Users {
         if (nullPassword()) return UserState.NULL_PASSWORD
 
         return UserState.CAN_LOGIN
+    }
+
+    private fun getIdByLogin(login: String): Long {
+        val cursor = database.query(
+            UserEntry.TABLE_NAME,
+            arrayOf(UserEntry.ID),
+            "${UserEntry.COLUMN_LOGIN} = ?",
+            arrayOf(login),
+            null,
+            null,
+            null
+        )
+
+        if (cursor.count == 0) {
+            cursor.close()
+            return -1L
+        }
+
+        cursor.moveToFirst()
+        val result = cursor.getLong(0)
+        cursor.close()
+
+        return result
     }
 
     private fun getCount(): Long {
@@ -159,6 +188,21 @@ object Users {
         cursor.close()
 
         return result
+    }
+
+    private fun updateLastSessionID(id: Long) {
+        database.execSQL(LastUserEntry.CLEAR)
+
+        database.insertWithOnConflict(
+            LastUserEntry.TABLE_NAME,
+            null,
+            ContentValues().apply {
+                put(LastUserEntry.ID, id)
+            },
+            SQLiteDatabase.CONFLICT_REPLACE
+        )
+
+        lastUserID = id
     }
 
     private fun updateCookie() {
@@ -209,7 +253,7 @@ object Users {
     private fun nullPassword(): Boolean {
         val cursor = database.query(
             UserEntry.TABLE_NAME,
-            null,
+            arrayOf(UserEntry.COLUMN_PASSWORD),
             "${UserEntry.ID} = ?",
             arrayOf("$lastUserID"),
             null,
@@ -219,7 +263,7 @@ object Users {
 
         cursor.moveToFirst()
 
-        val result = cursor.getType(2) == Cursor.FIELD_TYPE_NULL
+        val result = cursor.getType(0) == Cursor.FIELD_TYPE_NULL
 
         cursor.close()
 

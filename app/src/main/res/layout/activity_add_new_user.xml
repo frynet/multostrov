@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AuthorizationActivity">
+    tools:context=".ui.AddNewUserActivity">
 
     <ImageView
         android:id="@+id/logo"
@@ -29,7 +29,7 @@
 
         <include
             android:id="@+id/pattern_login"
-            layout="@layout/pattern_login_ex_user"
+            layout="@layout/pattern_login_new_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp" />
@@ -49,14 +49,6 @@
             android:layout_marginEnd="60dp"
             android:text="remember me"
             android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/login_to_another"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="login to another account"
-            android:textAlignment="center" />
     </LinearLayout>
 
     <Button

@@ -6,8 +6,12 @@ import android.os.Bundle
 import android.app.Dialog
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AppCompatActivity
 
-class InvalidDataDialog(private val sender: AuthorizationActivity) : DialogFragment() {
+class InvalidDataDialog<T>(
+    private val positiveAction: () -> Unit,
+    private val negativeAction: () -> Unit
+) : DialogFragment() where T : AppCompatActivity {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -15,11 +19,10 @@ class InvalidDataDialog(private val sender: AuthorizationActivity) : DialogFragm
 
             builder.setMessage(R.string.invalid_data_dialog)
                 .setPositiveButton(R.string.apply) { _, _ ->
-                    sender.clearFields()
+                    positiveAction()
                 }
                 .setNegativeButton(R.string.cancel) { _, _ ->
-                    sender.finish()
-                    System.exit(0)
+                    negativeAction()
                 }
 
             builder.create()

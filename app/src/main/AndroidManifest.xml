@@ -25,15 +25,19 @@
 
         <activity
             android:name=".ui.PromoActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.AuthorizationActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.MainActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".ui.AddNewUserActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

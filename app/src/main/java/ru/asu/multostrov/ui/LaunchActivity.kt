@@ -31,7 +31,7 @@ class LaunchActivity : AppCompatActivity() {
         }
 
         override fun onPostExecute(result: Unit?) {
-            when (Users.state) {
+            when (Users.state()) {
                 UserState.CAN_LOGIN -> Load.nextActivity(
                     this@LaunchActivity,
                     MainActivity::class.java,

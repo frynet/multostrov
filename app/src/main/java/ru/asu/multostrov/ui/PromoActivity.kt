@@ -21,7 +21,7 @@ class PromoActivity : AppCompatActivity() {
         webView.loadUrl(Config.BASE_URL)
 
         getStarted.setOnClickListener {
-            startActivity(Intent(this, AuthorizationActivity::class.java))
+            startActivity(Intent(this, AddNewUserActivity::class.java))
 
             finish()
         }
