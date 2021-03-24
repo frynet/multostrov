@@ -6,15 +6,24 @@ import androidx.appcompat.app.AppCompatActivity
 
 class Load {
     companion object {
-        fun <T> nextActivity(sender: AppCompatActivity, next: T, delay: Long) where T : Class<*> {
-            Handler().postDelayed({
-                sender.startActivity(Intent(sender, next))
-
-                sender.finish()
-            }, delay)
+        fun nextActivity(
+            sender: AppCompatActivity,
+            next: Class<*>,
+            delay: Long = 0
+        ) {
+            if (delay > 0) {
+                Handler().postDelayed({
+                    loadNext(sender, next)
+                }, delay)
+            } else {
+                loadNext(sender, next)
+            }
         }
 
-        fun <T> nextActivity(sender: AppCompatActivity, next: T) where T : Class<*> {
+        private fun loadNext(
+            sender: AppCompatActivity,
+            next: Class<*>
+        ) {
             sender.startActivity(Intent(sender, next))
 
             sender.finish()
