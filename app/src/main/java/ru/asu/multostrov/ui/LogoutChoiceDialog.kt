@@ -5,12 +5,18 @@ import ru.asu.multostrov.core.Load
 import ru.asu.multostrov.database.users.Users
 import ru.asu.multostrov.database.users.Users.UserState
 
+import kotlin.Exception
+
 import android.os.Bundle
 import android.app.Dialog
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import java.lang.Exception
 
+/**
+ * Dialog for giving choice to user.
+ *
+ * @throws Exception when user state isn't valid for it.
+ */
 class LogoutChoiceDialog(private val sender: MainActivity) : DialogFragment() {
 
     private fun loadNext() {

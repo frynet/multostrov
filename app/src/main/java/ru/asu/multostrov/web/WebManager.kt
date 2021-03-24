@@ -33,7 +33,7 @@ object WebManager {
         throw Exception("Can't validate cookie in function checkCookie: unknown response from ${Config.AUTH_REQUEST}")
     }
 
-    fun getCookie(login: String, password: String): String {
+    fun getSessionCookie(login: String, password: String): String {
         val response = Jsoup
             .connect(Config.BASE_URL)
             .data(Config.LOGIN_PARAM, login)
@@ -49,7 +49,9 @@ object WebManager {
         return cookie
     }
 
-    fun getCookie(): String {
-        return Config.SESSION_COOKIE + "=" + cookies[Config.SESSION_COOKIE].toString()
+    fun getCookies(): Map<String, String> {
+        return mapOf(
+            Config.SESSION_COOKIE to cookies[Config.SESSION_COOKIE].toString()
+        )
     }
 }

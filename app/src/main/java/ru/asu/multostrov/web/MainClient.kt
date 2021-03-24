@@ -1,28 +1,59 @@
 package ru.asu.multostrov.web
 
-import ru.asu.multostrov.ui.MainActivity
+import org.jsoup.Jsoup
+import android.webkit.*
 
-import android.webkit.WebView
-import android.graphics.Bitmap
-import ru.asu.multostrov.core.Assets
+class MainClient : WebViewClient() {
+    override fun shouldInterceptRequest(
+        view: WebView?,
+        request: WebResourceRequest
+    ): WebResourceResponse? {
+        if (
+            Config.pages.containsValue(request.url.lastPathSegment) ||
+            request.url.pathSegments.contains("games")
+        ) {
+            val response = Jsoup
+                .connect(request.url.toString())
+                .cookies(WebManager.getCookies())
+                .ignoreContentType(true)
+                .ignoreHttpErrors(true)
+                .execute()
+            val contentType = response.contentType()
 
-class MainClient : WebClient() {
-    init {
-        style = Assets.readFileAsStr(Config.MAIN_CONTENT_STYLE)
-        script = Assets.readFileAsStr(Config.MAIN_CONTENT_SCRIPT)
-    }
+            if (!Config.allowedMimeTypes.contains(contentType)) {
+                return super.shouldInterceptRequest(view, request)
+            }
 
-    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-        MainActivity.hideWebView()
-    }
+            val doc = response.parse()
+            val body = doc.body()
 
-    override fun onPageFinished(view: WebView?, url: String?) {
-        val code = """
-            javascript:(function() {                 
-                Android.callback();
-            })()
-        """.trimIndent()
+            val maincell = body.getElementById("maincell")
+                ?: return super.shouldInterceptRequest(view, request)
 
-        view?.loadUrl(code)
+            body.getElementById("printnone").remove()
+            body.getElementById("batteryfaiconbot")?.parent()?.parent()?.remove()
+            body.getElementById("body_1").attr(
+                "style",
+                "background: none !important; padding: 0 !important;"
+            )
+
+            maincell.attr(
+                "style",
+                "margin-bottom: 0 !important;"
+            )
+
+            maincell.parent().attr(
+                "style",
+                "padding: 0 !important;"
+            )
+
+            return WebResourceResponse(
+                contentType,
+                response.charset(),
+                doc.outerHtml().byteInputStream()
+            )
+        }
+
+        return super.shouldInterceptRequest(view, request)
     }
 }

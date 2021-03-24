@@ -1,9 +1,9 @@
 package ru.asu.multostrov.web
 
-enum class TABS {
-    HOME,
+enum class PAGE {
     LIB,
     SCHOOL,
     GAMES,
-    PROFILE
+    PROFILE,
+    PAYMENT
 }

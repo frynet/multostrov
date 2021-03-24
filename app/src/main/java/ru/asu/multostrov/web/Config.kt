@@ -12,25 +12,21 @@ object Config {
 
     const val USER_AGENT = "Chrome"
 
-    const val MAIN_CONTENT_STYLE = "mainContent.css"
-
-    const val MAIN_CONTENT_SCRIPT = "mainContent.js"
-
-    const val PROMO_CONTENT_STYLE = "promoContent.css"
-
-    const val PROMO_CONTENT_SCRIPT = "promoContent.js"
-
     const val AUTH_REQUEST = "http://multostrov.ru/status.php?action=auth"
 
     const val NOT_AUTHORIZED = "NOT AUTHORIZED"
 
     const val AUTHORIZED = "USER ID:"
 
-    val ref = mapOf(
-        TABS.HOME to "index.php",
-        TABS.LIB to "content.php",
-        TABS.SCHOOL to "lessons.php",
-        TABS.GAMES to "game.php",
-        TABS.PROFILE to "profile.php"
+    val allowedMimeTypes = listOf(
+        "text/html"
+    )
+
+    val pages = mapOf(
+        PAGE.LIB to "content.php",
+        PAGE.SCHOOL to "lessons.php",
+        PAGE.GAMES to "game.php",
+        PAGE.PROFILE to "profile.php",
+        PAGE.PAYMENT to "payment.php"
     )
 }

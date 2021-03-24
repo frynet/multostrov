@@ -6,7 +6,6 @@ import ru.asu.multostrov.database.users.Users
 import ru.asu.multostrov.database.users.Users.UserState
 
 import android.os.*
-import android.webkit.CookieManager
 import androidx.appcompat.app.AppCompatActivity
 
 class LaunchActivity : AppCompatActivity() {
@@ -18,9 +17,6 @@ class LaunchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launch)
-
-        Assets.connect(assets)
-        CookieManager.getInstance().removeAllCookies(null)
 
         TryLogIn().execute()
     }

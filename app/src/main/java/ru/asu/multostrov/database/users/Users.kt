@@ -10,6 +10,17 @@ import android.database.sqlite.SQLiteDatabase
 
 object Users {
 
+    /**
+     * Represents the user states.
+     *
+     * [NEW_USER] - the 'Users' table is empty (new user on device).
+     *
+     * [CAN_LOGIN] - user can log in service.
+     *
+     * [NOT_LOGGED_IN] - the last session user isn't saved.
+     *
+     * [NULL_PASSWORD] - the last session user need a confirmation of his password.
+     */
     enum class UserState {
         NEW_USER,
         CAN_LOGIN,
@@ -21,7 +32,7 @@ object Users {
     private var lastUserID: Long = -1
     private lateinit var database: SQLiteDatabase
     private lateinit var dbHelper: UsersDBHelper
-    
+
     fun connect(context: Context) {
         dbHelper = UsersDBHelper(context)
         database = dbHelper.writableDatabase
@@ -33,6 +44,11 @@ object Users {
         }
     }
 
+    /**
+     * The list of users that ever login from that device.
+     *
+     * @return [MutableList]
+     */
     fun getListUsers(): MutableList<String> {
         val list = mutableListOf<String>()
 
@@ -90,6 +106,9 @@ object Users {
         updateLastSessionID(getIdByLogin(login))
     }
 
+    /**
+     * Logout from session, but still staying on device.
+     */
     fun logoutTemporary() {
         if (state() == UserState.NOT_LOGGED_IN) return
 
@@ -102,6 +121,9 @@ object Users {
         database.execSQL(query)
     }
 
+    /**
+     * Logout from session and drop account from device.
+     */
     fun logoutPermanently() {
         if (state() == UserState.NOT_LOGGED_IN) return
 
@@ -115,6 +137,11 @@ object Users {
         database.execSQL(LastUserEntry.CLEAR)
     }
 
+    /**
+     * Returns current user state.
+     *
+     * @return [UserState]
+     */
     fun state(): UserState {
         if (count == 0L) return UserState.NEW_USER
 
@@ -229,7 +256,7 @@ object Users {
 
         if (isCookieNull || invalidCookie) {
             val password = cursor.getString(2)
-            val newCookie = WebManager.getCookie(user, password)
+            val newCookie = WebManager.getSessionCookie(user, password)
 
             cursor.close()
 

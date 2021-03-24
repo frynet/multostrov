@@ -21,7 +21,11 @@ class AuthorizationActivity : LoginActivity, AppCompatActivity() {
 
         val listUsers = Users.getListUsers()
         val spinner = pattern_login.ex_user_login
-        spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, listUsers)
+        spinner.adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            listUsers
+        )
 
         loginButton.setOnClickListener {
             val login = spinner.selectedItem.toString()

@@ -6,6 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 
 class Load {
     companion object {
+        /**
+         * Load next activity and finish current.
+         *
+         * @param sender the current activity.
+         * @param next the next activity class.
+         * @param delay (optional) delay before loading [next].
+         */
         fun nextActivity(
             sender: AppCompatActivity,
             next: Class<*>,
