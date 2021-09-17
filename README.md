@@ -1,43 +1,17 @@
-# App:
-
+# Android app based on web-version [educational resource](https://multostrov.ru/) 
 <details>
-  <summary>1</summary>
+<summary>Launch screen & Authorization form</summary>
 
-![](https://github.com/frynet/multostrov/blob/master/docs/img/screenshots/1.png)
-
+  <img title="Launch screen"      src="https://github.com/frynet/multostrov/blob/master/docs/img/screenshots/1.png" width="350"/>
+  <img title="Authorization form" src="https://github.com/frynet/multostrov/blob/master/docs/img/screenshots/2.png" width="350"/>
 </details>
 
 <details>
-  <summary>2</summary>
+<summary>Main</summary>
 
-![](https://github.com/frynet/multostrov/blob/master/docs/img/screenshots/2.png)
-
+  <img title="Library"  src="https://github.com/frynet/multostrov/blob/master/docs/img/screenshots/3.png" width="600"/>
+  <img title="Study"    src="https://github.com/frynet/multostrov/blob/master/docs/img/screenshots/4.png" width="600"/>
+  <img title="Games"    src="https://github.com/frynet/multostrov/blob/master/docs/img/screenshots/5.png" width="600"/>
+  <img title="Settings" src="https://github.com/frynet/multostrov/blob/master/docs/img/screenshots/6.png" width="600"/>
 </details>
 
-<details>
-  <summary>3</summary>
-
-![](https://github.com/frynet/multostrov/blob/master/docs/img/screenshots/3.png)
-
-</details>
-
-<details>
-  <summary>4</summary>
-
-![](https://github.com/frynet/multostrov/blob/master/docs/img/screenshots/4.png)
-
-</details>
-
-<details>
-  <summary>5</summary>
-
-![](https://github.com/frynet/multostrov/blob/master/docs/img/screenshots/5.png)
-
-</details>
-
-<details>
-  <summary>6</summary>
-
-![](https://github.com/frynet/multostrov/blob/master/docs/img/screenshots/6.png)
-
-</details>
