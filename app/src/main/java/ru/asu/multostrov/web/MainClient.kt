@@ -1,7 +1,10 @@
 package ru.asu.multostrov.web
 
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import org.jsoup.Jsoup
-import android.webkit.*
 
 class MainClient : WebViewClient() {
     override fun shouldInterceptRequest(

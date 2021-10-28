@@ -1,13 +1,13 @@
 package ru.asu.multostrov.ui
 
-import ru.asu.multostrov.R
-import ru.asu.multostrov.web.*
-
-import android.os.Bundle
 import android.annotation.SuppressLint
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-
 import kotlinx.android.synthetic.main.activity_main.*
+import ru.asu.multostrov.R
+import ru.asu.multostrov.web.Config
+import ru.asu.multostrov.web.MainClient
+import ru.asu.multostrov.web.PAGE
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,12 +1,13 @@
 package ru.asu.multostrov.database.users
 
-import ru.asu.multostrov.web.WebManager
-import ru.asu.multostrov.database.users.UserContract.UserEntry
-import ru.asu.multostrov.database.users.LastUserContract.LastUserEntry
-
-import android.content.*
+import android.content.ContentValues
+import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import ru.asu.multostrov.database.users.LastUserContract.LastUserEntry
+import ru.asu.multostrov.database.users.UserContract.UserEntry
+import ru.asu.multostrov.database.users.Users.UserState.*
+import ru.asu.multostrov.web.WebManager
 
 object Users {
 
@@ -39,7 +40,7 @@ object Users {
         count = getCount()
         lastUserID = getLastUserID()
 
-        if (state() == UserState.CAN_LOGIN) {
+        if (state() == CAN_LOGIN) {
             updateCookie()
         }
     }
@@ -110,7 +111,7 @@ object Users {
      * Logout from session, but still staying on device.
      */
     fun logoutTemporary() {
-        if (state() == UserState.NOT_LOGGED_IN) return
+        if (state() == NOT_LOGGED_IN) return
 
         val query = """
             UPDATE ${UserEntry.TABLE_NAME}
@@ -125,7 +126,7 @@ object Users {
      * Logout from session and drop account from device.
      */
     fun logoutPermanently() {
-        if (state() == UserState.NOT_LOGGED_IN) return
+        if (state() == NOT_LOGGED_IN) return
 
         count -= database.delete(
             UserEntry.TABLE_NAME,
@@ -143,13 +144,13 @@ object Users {
      * @return [UserState]
      */
     fun state(): UserState {
-        if (count == 0L) return UserState.NEW_USER
+        if (count == 0L) return NEW_USER
 
-        if (lastUserID < 0) return UserState.NOT_LOGGED_IN
+        if (lastUserID < 0) return NOT_LOGGED_IN
 
-        if (nullPassword()) return UserState.NULL_PASSWORD
+        if (nullPassword()) return NULL_PASSWORD
 
-        return UserState.CAN_LOGIN
+        return CAN_LOGIN
     }
 
     private fun getIdByLogin(login: String): Long {

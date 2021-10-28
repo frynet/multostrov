@@ -1,14 +1,13 @@
 package ru.asu.multostrov.ui
 
-import ru.asu.multostrov.R
-import ru.asu.multostrov.web.*
-
-import android.os.Bundle
-import android.content.Intent
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-
 import kotlinx.android.synthetic.main.activity_promo.*
+import ru.asu.multostrov.R
+import ru.asu.multostrov.web.Config
+import ru.asu.multostrov.web.PromoClient
 
 class PromoActivity : AppCompatActivity() {
 

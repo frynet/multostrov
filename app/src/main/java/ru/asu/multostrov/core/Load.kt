@@ -1,7 +1,7 @@
 package ru.asu.multostrov.core
 
-import android.os.*
-import android.content.*
+import android.content.Intent
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 
 class Load {

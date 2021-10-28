@@ -1,12 +1,11 @@
 package ru.asu.multostrov.ui
 
-import ru.asu.multostrov.R
-
-import android.os.Bundle
 import android.app.Dialog
+import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
+import ru.asu.multostrov.R
 
 class InvalidDataDialog<T>(
     private val positiveAction: () -> Unit,

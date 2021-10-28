@@ -1,16 +1,13 @@
 package ru.asu.multostrov.ui
 
+import android.app.Dialog
+import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import ru.asu.multostrov.R
 import ru.asu.multostrov.core.Load
 import ru.asu.multostrov.database.users.Users
 import ru.asu.multostrov.database.users.Users.UserState
-
-import kotlin.Exception
-
-import android.os.Bundle
-import android.app.Dialog
-import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 
 /**
  * Dialog for giving choice to user.

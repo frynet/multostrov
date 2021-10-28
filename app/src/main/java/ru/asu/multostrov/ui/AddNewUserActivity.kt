@@ -1,14 +1,12 @@
 package ru.asu.multostrov.ui
 
-import ru.asu.multostrov.R
-
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-
-import kotlinx.android.synthetic.main.pattern_password.*
 import kotlinx.android.synthetic.main.activity_add_new_user.*
-import kotlinx.android.synthetic.main.pattern_password.view.*
 import kotlinx.android.synthetic.main.pattern_login_new_user.*
+import kotlinx.android.synthetic.main.pattern_password.*
+import kotlinx.android.synthetic.main.pattern_password.view.*
+import ru.asu.multostrov.R
 
 class AddNewUserActivity : LoginActivity, AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

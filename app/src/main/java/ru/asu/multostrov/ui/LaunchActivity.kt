@@ -1,12 +1,11 @@
 package ru.asu.multostrov.ui
 
+import android.os.*
+import androidx.appcompat.app.AppCompatActivity
 import ru.asu.multostrov.R
 import ru.asu.multostrov.core.*
 import ru.asu.multostrov.database.users.Users
 import ru.asu.multostrov.database.users.Users.UserState
-
-import android.os.*
-import androidx.appcompat.app.AppCompatActivity
 
 class LaunchActivity : AppCompatActivity() {
 

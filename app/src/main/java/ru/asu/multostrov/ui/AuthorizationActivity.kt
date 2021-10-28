@@ -1,17 +1,15 @@
 package ru.asu.multostrov.ui
 
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_authorization.*
+import kotlinx.android.synthetic.main.pattern_login_ex_user.view.*
+import kotlinx.android.synthetic.main.pattern_password.*
+import kotlinx.android.synthetic.main.pattern_password.view.*
 import ru.asu.multostrov.R
 import ru.asu.multostrov.core.Load
 import ru.asu.multostrov.database.users.Users
-
-import android.os.*
-import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-
-import kotlinx.android.synthetic.main.pattern_password.*
-import kotlinx.android.synthetic.main.pattern_password.view.*
-import kotlinx.android.synthetic.main.activity_authorization.*
-import kotlinx.android.synthetic.main.pattern_login_ex_user.view.*
 
 class AuthorizationActivity : LoginActivity, AppCompatActivity() {
 

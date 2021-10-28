@@ -1,11 +1,11 @@
 package ru.asu.multostrov.ui
 
-import ru.asu.multostrov.core.Load
-import ru.asu.multostrov.web.WebManager
-import ru.asu.multostrov.database.users.Users
-
-import android.os.*
+import android.os.AsyncTask
+import android.os.Process
 import androidx.appcompat.app.AppCompatActivity
+import ru.asu.multostrov.core.Load
+import ru.asu.multostrov.database.users.Users
+import ru.asu.multostrov.web.WebManager
 
 /**
  * Authorization of user

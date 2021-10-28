@@ -1,6 +1,7 @@
 package ru.asu.multostrov.web
 
-import org.jsoup.*
+import org.jsoup.Connection
+import org.jsoup.Jsoup
 
 object WebManager {
 
