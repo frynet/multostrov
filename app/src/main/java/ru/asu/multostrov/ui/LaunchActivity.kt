@@ -2,6 +2,7 @@ package ru.asu.multostrov.ui
 
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.*
 import ru.asu.multostrov.R
 import ru.asu.multostrov.core.*
 import ru.asu.multostrov.database.users.Users
@@ -17,34 +18,32 @@ class LaunchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launch)
 
-        TryLogIn().execute()
+        CoroutineScope(Dispatchers.IO).launch {
+            tryLogin()
+        }
     }
 
-    private inner class TryLogIn : AsyncTask<Void, Void, Unit>() {
-        override fun doInBackground(vararg p0: Void?) {
-            Users.connect(applicationContext)
-        }
+    private suspend fun tryLogin() = coroutineScope {
+        async { Users.connect(applicationContext) }.join()
 
-        override fun onPostExecute(result: Unit?) {
-            when (Users.state()) {
-                UserState.CAN_LOGIN -> Load.nextActivity(
-                    this@LaunchActivity,
-                    MainActivity::class.java,
-                    DELAY_ACTIVITY
-                )
+        when (Users.state()) {
+            UserState.CAN_LOGIN -> Load.nextActivity(
+                this@LaunchActivity,
+                MainActivity::class.java,
+                DELAY_ACTIVITY
+            )
 
-                UserState.NEW_USER -> Load.nextActivity(
-                    this@LaunchActivity,
-                    PromoActivity::class.java,
-                    DELAY_ACTIVITY
-                )
+            UserState.NEW_USER -> Load.nextActivity(
+                this@LaunchActivity,
+                PromoActivity::class.java,
+                DELAY_ACTIVITY
+            )
 
-                UserState.NOT_LOGGED_IN, UserState.NULL_PASSWORD -> Load.nextActivity(
-                    this@LaunchActivity,
-                    AuthorizationActivity::class.java,
-                    DELAY_ACTIVITY
-                )
-            }
+            UserState.NOT_LOGGED_IN, UserState.NULL_PASSWORD -> Load.nextActivity(
+                this@LaunchActivity,
+                AuthorizationActivity::class.java,
+                DELAY_ACTIVITY
+            )
         }
     }
 }

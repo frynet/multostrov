@@ -8,8 +8,9 @@ import androidx.fragment.app.DialogFragment
 import ru.asu.multostrov.R
 
 class InvalidDataDialog<T>(
+    private val sender: AppCompatActivity,
     private val positiveAction: () -> Unit,
-    private val negativeAction: () -> Unit
+    private val negativeAction: (AppCompatActivity) -> Unit
 ) : DialogFragment() where T : AppCompatActivity {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -21,7 +22,7 @@ class InvalidDataDialog<T>(
                     positiveAction()
                 }
                 .setNegativeButton(R.string.cancel) { _, _ ->
-                    negativeAction()
+                    negativeAction(sender)
                 }
 
             builder.create()

@@ -19,9 +19,11 @@ class Load {
             delay: Long = 0
         ) {
             if (delay > 0) {
-                Handler().postDelayed({
-                    loadNext(sender, next)
-                }, delay)
+                sender.runOnUiThread {
+                    Handler().postDelayed({
+                        loadNext(sender, next)
+                    }, delay)
+                }
             } else {
                 loadNext(sender, next)
             }

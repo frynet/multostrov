@@ -6,6 +6,9 @@ import kotlinx.android.synthetic.main.activity_add_new_user.*
 import kotlinx.android.synthetic.main.pattern_login_new_user.*
 import kotlinx.android.synthetic.main.pattern_password.*
 import kotlinx.android.synthetic.main.pattern_password.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.asu.multostrov.R
 
 class AddNewUserActivity : LoginActivity, AppCompatActivity() {
@@ -17,7 +20,9 @@ class AddNewUserActivity : LoginActivity, AppCompatActivity() {
             val login = new_user_login.text.toString()
             val password = password_field.text.toString()
 
-            Authorization(this, login, password, remember_me.isChecked).execute()
+            CoroutineScope(Dispatchers.IO).launch {
+                Authorization.run(this@AddNewUserActivity, login, password, remember_me.isChecked)
+            }
         }
     }
 

@@ -7,6 +7,9 @@ import kotlinx.android.synthetic.main.activity_authorization.*
 import kotlinx.android.synthetic.main.pattern_login_ex_user.view.*
 import kotlinx.android.synthetic.main.pattern_password.*
 import kotlinx.android.synthetic.main.pattern_password.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.asu.multostrov.R
 import ru.asu.multostrov.core.Load
 import ru.asu.multostrov.database.users.Users
@@ -29,7 +32,14 @@ class AuthorizationActivity : LoginActivity, AppCompatActivity() {
             val login = spinner.selectedItem.toString()
             val password = password_field.text.toString()
 
-            Authorization(this, login, password, remember_me.isChecked).execute()
+            CoroutineScope(Dispatchers.IO).launch {
+                Authorization.run(
+                    this@AuthorizationActivity,
+                    login,
+                    password,
+                    remember_me.isChecked
+                )
+            }
         }
 
         login_to_another.setOnClickListener {
